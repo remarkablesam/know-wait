@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Know Empire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons, as seen in the design -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS Variables for colors from the design system */
+        :root {
+            --primary-purple: #8A2BE2; /* Primary */
+            --secondary-purple: #7B1FA2; /* A darker purple for interaction */
+            --text-dark: #1A1A1A; /* Black text */
+            --text-gray: #4A4A4A; /* Grey text */
+            --white: #FFFFFF;
+            --background-light-gray: #F0F0F0;
+            --card-background: #F8F8F8;
+            --accent-yellow: #FFD700;
+            --light-grey-bg: #E8E8E8; /* for sections */
+            --border-color: #D3D3D3;
+            --border-light: #E0E0E0;
+            --placeholder-color: #B0B0B0;
+        }
+
+        /* Basic Reset & Typography */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-light-gray);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: var(--text-gray);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            border: 2px solid var(--primary-purple);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-purple);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-purple);
+            border: 2px solid var(--primary-purple);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--white);
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-img {
+            height: 40px; /* Adjust height as needed */
+            width: auto;
+            object-fit: contain;
+            vertical-align: middle;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-menu li {
+            margin-left: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary-purple);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--primary-purple);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                position: fixed; /* Changed from absolute to fixed */
+                top: 70px; /* Aligns below the header */
+                right: 0;
+                width: min(80vw, 300px); /* Responsive width, max 300px */
+                height: auto; /* Adjust height based on content */
+                max-height: calc(100vh - 70px); /* Ensure it doesn't exceed viewport height below header */
+                overflow-y: auto; /* Enable scrolling if content exceeds max-height */
+                background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white for lighter blur effect */
+                backdrop-filter: blur(5px); /* Apply lighter blur effect */
+                -webkit-backdrop-filter: blur(5px); /* For Safari support */
+                box-shadow: -8px 0 16px rgba(0,0,0,0.1); /* Slightly lighter shadow on the left edge */
+                padding: 20px; /* Adjust padding for internal spacing */
+                text-align: center;
+                border-top-left-radius: 12px; /* Curved top-left */
+                border-bottom-left-radius: 12px; /* Curved bottom-left */
+                transform: translateX(100%); /* Start hidden off-screen to the right */
+                transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth slide transition */
+                z-index: 1050; /* Ensure it's on top of other content */
+                display: flex; /* Keep display flex so transform works */
+            }
+
+            .nav-menu.active {
+                transform: translateX(0); /* Slide into view */
+            }
+
+            /* Disable pointer events when menu is not active to prevent accidental clicks */
+            .nav-menu:not(.active) {
+                pointer-events: none;
+            }
+
+            .nav-menu li {
+                margin: 15px 0;
+            }
+
+            .nav-menu a {
+                padding: 10px 0;
+                display: block; /* Make links block level for better touch target */
+                color: var(--text-dark); /* Ensure text is visible over transparent background */
+                font-size: 18px; /* Slightly larger font for mobile */
+            }
+
+            .hamburger {
+                display: block;
+                z-index: 1100; /* Ensure hamburger icon is on top of the sliding menu */
+            }
+        }
+
+        /* Section Styling */
+        section {
+            padding: 60px 0;
+            background-color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            padding: 100px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh; /* Make hero section taller */
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+            max-width: 800px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .hero .btn-white {
+            background-color: var(--white);
+            color: var(--primary-purple);
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+
+        .hero .btn-white:hover {
+            background-color: var(--light-grey-bg);
+            transform: translateY(-2px);
+        }
+
+        .hero .waitlist-count {
+            margin-top: 20px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .feature-card .icon {
+            font-size: 48px;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 15px;
+            color: var(--text-gray);
+        }
+
+        /* Tabbed Sections */
+        .tabs-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+        }
+
+        .tab-btn {
+            padding: 10px 25px;
+            border: none;
+            background-color: var(--light-grey-bg);
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-purple);
+            color: var(--white);
+        }
+
+        .tab-btn:hover {
+            background-color: var(--primary-purple);
+            color: var(--white);
+        }
+
+        .tab-content {
+            display: none; /* Hidden by default, shown by JS */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* How it Works Section */
+        .how-it-works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .how-it-works-step {
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+            text-align: center;
+        }
+
+        .how-it-works-step .step-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-purple);
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            opacity: 0.2; /* Light and subtle */
+        }
+
+        .how-it-works-step h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-top: 20px; /* Space for number */
+            text-align: left;
+            margin-left: 20px;
+        }
+
+        .how-it-works-step p {
+            font-size: 16px;
+            color: var(--text-gray);
+            text-align: left;
+            margin-left: 20px;
+        }
+
+
+        /* How Escrow Protection Works */
+        .escrow-steps {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px; /* Ensures steps don't get too small */
+            padding: 20px;
+            border-radius: 12px;
+            background-color: var(--card-background);
+        }
+
+        .step .icon {
+            font-size: 40px;
+            color: var(--primary-purple);
+            margin-bottom: 15px;
+        }
+
+        .step h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .logo-footer-img{
+          border-radius: 8px;
+        }
+
+        .escrow-details {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .escrow-details > div {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .escrow-details h4 {
+            font-size: 20px;
+            color: var(--primary-purple);
+            margin-bottom: 15px;
+        }
+
+        .escrow-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .escrow-details ul li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 15px;
+            color: var(--text-gray);
+        }
+
+        .escrow-details ul li::before {
+            content: "\f00c"; /* Font Awesome check icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--primary-purple);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        /* Important Note */
+        .important-note {
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary-purple);
+            margin-top: 40px;
+        }
+
+        .important-note h3 {
+            color: var(--primary-purple);
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        /* Community Leaderboard */
+        .leaderboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .leaderboard-item {
+            background-color: var(--card-background);
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .leaderboard-item .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--white);
+            font-weight: bold;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden; /* Ensure image fits */
+        }
+        .leaderboard-item .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the area, cropping if necessary */
+        }
+
+        .leaderboard-item .info h4 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-dark);
+        }
+        .leaderboard-item .info p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+        .leaderboard-item .referrals {
+            margin-left: auto;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-purple);
+        }
+
+
+        /* FAQ Section */
+        .faq-item {
+            background-color: var(--card-background);
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 17px;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: var(--light-grey-bg);
+        }
+
+        .faq-question .toggle-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            color: var(--text-gray);
+        }
+
+        .faq-answer.active {
+            max-height: 200px; /* Adjust as needed */
+            padding: 20px;
+        }
+
+        /* Earn SKNOW Tokens */
+        .earn-tokens-section {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .earn-tokens-section h2 {
+            color: var(--white);
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .earn-tokens-section p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .token-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .token-buttons .btn {
+            background-color: var(--white);
+            color: var(--primary-purple);
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            min-width: 180px; /* Ensure buttons have minimum width */
+        }
+
+        .token-buttons .btn:hover {
+            background-color: var(--light-grey-bg);
+            color: var(--secondary-purple);
+        }
+
+        /* Be First to Experience KnowEmpire (Email Signup) */
+        .signup-section {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .signup-section h2 {
+            color: var(--white);
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .signup-section p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+
+        .signup-form {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+
+        .signup-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .signup-form label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .signup-form input[type="email"],
+        .signup-form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--text-dark);
+        }
+
+        .signup-form input[type="email"]::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        .signup-form .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .signup-form input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .signup-form .checkbox-group label {
+            font-size: 15px;
+            color: var(--text-gray);
+            margin-bottom: 0;
+        }
+
+        .signup-form .btn-primary {
+            width: 100%;
+            font-size: 18px;
+            padding: 15px;
+        }
+
+        .signup-section .waitlist-count {
+            margin-top: 20px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+
+        /* Footer */
+        .footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: 50px 0 20px;
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary-purple);
+        }
+
+        .footer .logo-footer-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            vertical-align: middle;
+            margin-bottom: 20px;
+        }
+
+        .footer .newsletter-form {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .footer .newsletter-form input[type="email"] {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px 0 0 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            font-size: 15px;
+        }
+
+        .footer .newsletter-form input[type="email"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer .newsletter-form .btn {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            border: none;
+            border-radius: 0 8px 8px 0;
+            padding: 10px 20px;
+            font-size: 15px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 30px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .footer-bottom .links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        .footer-bottom .links a:hover {
+            color: var(--primary-purple);
+        }
+
+
+        /* Media Queries for Mobile */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .section-header h2, .hero h1, .signup-section h2, .earn-tokens-section h2 {
+                font-size: 28px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p, .signup-section p, .earn-tokens-section p {
+                font-size: 16px;
+            }
+
+            .feature-grid,
+            .escrow-steps,
+            .escrow-details,
+            .token-buttons,
+            .how-it-works-grid,
+            .leaderboard-grid,
+            .footer-grid {
+                grid-template-columns: 1fr; /* Stack elements vertically */
+                flex-direction: column; /* Stack elements vertically */
+            }
+
+            .feature-card, .step, .escrow-details > div, .how-it-works-step {
+                margin-bottom: 20px; /* Add space between stacked items */
+            }
+
+            .tab-btn {
+                width: 100%; /* Make tabs full width */
+            }
+
+            .footer-grid {
+                text-align: center;
+            }
+            .footer .logo-footer-img {
+                display: block;
+                margin: 0 auto 20px; /* Center image on mobile */
+            }
+            .footer .newsletter-form {
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+            .footer .newsletter-form input[type="email"] {
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+            .footer .newsletter-form .btn {
+                border-radius: 8px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="#hero" class="logo">
+            <img src="appicon.png" alt="Know Empire Logo" class="logo-img">
+        </a>
+        <nav>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#learn-more" class="nav-link active">Features</a></li>
+                <li><a href="#how-it-works" class="nav-link">How it Works</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="container">
+                <h1>Buy, Sell & Offer Services<br>Directly, Securely, Onchain</h1>
+                <p>The crypto-native P2P marketplace where you can safely buy and sell goods, digital products, and services with built-in escrow protection.</p>
+                <a href="#signup" class="btn btn-white">Join the waitlist</a>
+                <p class="waitlist-count">Join 1,000+ people on the waitlist</p>
+                <!-- Placeholder for image/graphic -->
+                <div style="width: 100%; max-width: 600px; height: 200px; background-color: rgba(255,255,255,0.1); border-radius: 12px; margin-top: 50px;"></div>
+            </div>
+        </section>
+
+        <!-- Learn More About KnowEmpire Section -->
+        <section id="learn-more" class="container">
+            <div class="section-header">
+                <h2>Learn more about KnowEmpire</h2>
+                <p>KnowEmpire combines the best of Web3 technology with practical marketplace solutions to create a seamless trading experience.</p>
+            </div>
+            <div class="tabs-navigation">
+                <button class="tab-btn active" data-tab="features-tab">Features</button>
+                <button class="tab-btn" data-tab="escrow-safety-tab">Escrow Safety</button>
+                <button class="tab-btn" data-tab="rewards-tab">Rewards</button>
+            </div>
+
+            <!-- Tab Content for Learn More -->
+            <div id="features-tab" class="tab-content active">
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt icon"></i>
+                        <h3>Escrow Protected</h3>
+                        <p>Your transactions are secured by our blockchain-powered escrow system.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-coins icon"></i>
+                        <h3>Crypto-Native</h3>
+                        <p>Seamlessly integrate with various cryptocurrencies for transactions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-users icon"></i>
+                        <h3>Global Community</h3>
+                        <p>Join a vibrant community of buyers and sellers worldwide.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-boxes icon"></i>
+                        <h3>Digital & Physical Product Sales</h3>
+                        <p>Secure transactions for both digital goods and tangible products.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-briefcase icon"></i>
+                        <h3>Advance Services Zone</h3>
+                        <p>Facilitate secure payments for professional services and freelancing.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-truck icon"></i>
+                        <h3>Logistics Integration</h3>
+                        <p>Streamlined delivery and tracking solutions integrated into the platform.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="escrow-safety-tab" class="tab-content">
+                <div class="section-header">
+                    <h3>Enhanced Escrow Security</h3>
+                    <p>Our escrow system uses advanced smart contracts to provide unparalleled security for all transactions.</p>
+                </div>
+                <div class="escrow-details">
+                    <div>
+                        <h4>Buyer Protections</h4>
+                        <ul>
+                            <li>Funds are held until satisfied with delivery.</li>
+                            <li>Option to dispute if terms are not met.</li>
+                            <li>Full refund if seller fails to deliver.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Seller Benefits</h4>
+                        <ul>
+                            <li>Guaranteed payment once delivery is confirmed.</li>
+                            <li>Protection against fraudulent disputes.</li>
+                            <li>Clear terms reduce misunderstandings.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="rewards-tab" class="tab-content">
+                <div class="section-header">
+                    <h3>Earn While You Transact</h3>
+                    <p>Discover how you can earn rewards and tokens within the KnowEmpire ecosystem.</p>
+                </div>
+                <p>Content about rewards for active participation, referrals, and successful transactions will go here.</p>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="container">
+            <div class="section-header">
+                <h2>How it Works</h2>
+                <p>Our escrow-powered marketplace makes buying and selling simple, secure, and transparent.</p>
+            </div>
+
+            <div class="how-it-works-grid">
+                <div class="how-it-works-step">
+                    <span class="step-number">1</span>
+                    <h3>Connect Farcaster</h3>
+                    <p>Sign up or link your Farcaster account to access the marketplace with your existing Web3 identity.</p>
+                </div>
+                <div class="how-it-works-step">
+                    <span class="step-number">2</span>
+                    <h3>List Your Item/Service</h3>
+                    <p>Create a listing with photos, description, price and delivery options for your product or service.</p>
+                </div>
+                <div class="how-it-works-step">
+                    <span class="step-number">3</span>
+                    <h3>Secure Escrow Transaction</h3>
+                    <p>Buyer funds are held in escrow until delivery is confirmed, protecting both parties.</p>
+                </div>
+                <div class="how-it-works-step">
+                    <span class="step-number">4</span>
+                    <h3>Complete & Review</h3>
+                    <p>Confirm receipt, release funds, and leave a review to build your reputation in the ecosystem.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How Escrow Protection Works Section (from previous iteration - renamed ID for uniqueness) -->
+        <section id="escrow-safety-full" class="container">
+            <div class="section-header">
+                <h2>How Escrow Protection Works</h2>
+                <p>Our robust escrow system ensures fair and secure transactions every time.</p>
+            </div>
+
+            <div class="escrow-steps">
+                <div class="step">
+                    <i class="fas fa-lock icon"></i>
+                    <h3>Funds Secured</h3>
+                    <p>Buyer's funds are held securely in a smart contract until conditions are met.</p>
+                </div>
+                <div class="step">
+                    <i class="fas fa-check-circle icon"></i>
+                    <h3>Delivery Confirmed</h3>
+                    <p>Seller delivers goods/services, and buyer confirms receipt and satisfaction.</p>
+                </div>
+                <div class="step">
+                    <i class="fas fa-hand-holding-usd icon"></i>
+                    <h3>Payment Released</h3>
+                    <p>Funds are automatically released to the seller upon confirmation.</p>
+                </div>
+            </div>
+
+            <div class="escrow-details">
+                <div>
+                    <h4>For Buyers</h4>
+                    <ul>
+                        <li>Your payment is protected until you receive your goods.</li>
+                        <li>Ability to dispute your order if it doesn't match description.</li>
+                        <li>Clear-cut terms and conditions for all transactions.</li>
+                        <li>24/7 support for any issues.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>For Sellers</h4>
+                    <ul>
+                        <li>Guaranteed payment once delivery is confirmed.</li>
+                        <li>Protection against fraudulent chargebacks.</li>
+                        <li>Clear-cut terms and conditions for all transactions.</li>
+                        <li>Access to a global marketplace.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="important-note">
+                <h3>Important Note</h3>
+                <p>All transactions are governed by our escrow smart contract. By using KnowEmpire, you agree to abide by the terms and conditions of our secure escrow. Please refer to our full terms of service for detailed protection protocols.</p>
+            </div>
+        </section>
+
+        <!-- Community Leaderboard Section -->
+        <section id="community" class="container">
+            <div class="section-header">
+                <h2>Community Leaderboard</h2>
+                <p>Top performers in the KnowEmpire community.</p>
+            </div>
+            <div class="leaderboard-grid" id="leaderboardGrid">
+                <!-- Leaderboard items will be generated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Frequently Asked Questions Section -->
+        <section id="faq" class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about KnowEmpire and how it works.</p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is KnowEmpire?
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Know Empire is a Web3 peer-to-peer marketplace mini-app built on Farcaster that allows users to buy and sell both digital and physical goods, as well as offer freelance services. All transactions are secured through smart contract escrow.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do I need a Farcaster account to use KnowEmpire?
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, Know Empire leverages Farcaster for user authentication and social interactions within the marketplace. You will need a Farcaster ID to get started.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How does payment work?
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Payments are made using various cryptocurrencies supported on the platform. Funds are held in a secure escrow smart contract until the transaction terms are met and confirmed by both parties.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What types of items can I sell on KnowEmpire?
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can sell a wide range of items, including digital products (e.g., e-books, software licenses), physical goods, and offer various services (e.g., graphic design, writing, consulting).</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What happens if there's a problem with the delivery?
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our escrow system includes a dispute resolution mechanism. If there's a problem, you can open a dispute, and our team will mediate to ensure a fair resolution based on the transaction terms.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I be both a buyer and a seller?
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! Know Empire is designed for users to seamlessly transition between buying and selling roles, allowing you to participate fully in the marketplace ecosystem.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do I need a wallet to use Know Empire?
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, a compatible Web3 wallet is required to interact with the smart contracts, manage your funds, and participate in transactions on the Know Empire platform.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Be First to Experience KnowEmpire (Email Signup) Section -->
+        <section id="signup" class="signup-section">
+            <div class="container">
+                <h2>Be First to Experience KnowEmpire</h2>
+                <p>Join our exclusive waitlist to get early access when we launch. Be part of the future of decentralized commerce.</p>
+                <div class="signup-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="you@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">Select your interest</label>
+                        <select id="interest">
+                            <option value="">I'm interested in...</option>
+                            <option value="buying-product">Buying Product</option>
+                            <option value="selling-product">Selling Product</option>
+                            <option value="offering-services">Offering Services</option>
+                            <option value="all-of-above">All of the Above</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms-agree">
+                        <label for="terms-agree">I agree to receive updates about KnowEmpire and its launch from the developers.</label>
+                    </div>
+                    <button class="btn btn-primary">Join the Waitlist</button>
+                    <p class="waitlist-count">1,000+ people already on the waitlist</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="#" class="logo-footer">
+                        <img src="appicon.png" alt="Know Empire Logo" class="logo-footer-img">
+                    </a>
+                    <p>Get the freshest news from us.</p>
+                    <p>Subscribe to our newsletter.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="you@example.com">
+                        <button class="btn">Subscribe</button>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Customer Care</a></li>
+                        <li><a href="#">Service</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                        <li><a href="#">Legal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 KnowEmpire. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Hamburger Menu Functionality
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+
+            if (hamburger && navMenu) { // Defensive check
+                hamburger.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+            }
+
+            // Close nav menu when a link is clicked (for mobile)
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navMenu && navMenu.classList.contains('active')) { // Defensive check for navMenu
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        console.error(`Target element with ID "${targetId}" not found.`);
+                    }
+                });
+            });
+
+            // Tab Functionality
+            function setupTabs(containerId) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                const tabButtons = container.querySelectorAll('.tabs-navigation .tab-btn');
+                const tabContents = Array.from(container.parentNode.querySelectorAll('.tab-content')).filter(content => {
+                    // Ensure tab content belongs to this specific tab group
+                    return Array.from(tabButtons).some(btn => btn.dataset.tab === content.id);
+                });
+
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+
+                        tabContents.forEach(content => content.classList.remove('active'));
+                        const targetTabId = button.dataset.tab;
+                        const targetContent = document.getElementById(targetTabId);
+                        if (targetContent) {
+                            targetContent.classList.add('active');
+                        }
+                    });
+                });
+
+                // Set initial active tab based on the active class in HTML
+                const initialActiveButton = container.querySelector('.tabs-navigation .tab-btn.active');
+                if (initialActiveButton) {
+                    const initialActiveTabId = initialActiveButton.dataset.tab;
+                    const initialActiveContent = document.getElementById(initialActiveTabId);
+                    if (initialActiveContent) {
+                        initialActiveContent.classList.add('active');
+                    }
+                }
+            }
+
+            // Initialize tabs for the "Learn more about KnowEmpire" section
+            setupTabs('learn-more');
+
+            // FAQ Accordion Functionality
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const toggleIcon = question.querySelector('.toggle-icon');
+
+                    // Close all other open FAQs
+                    document.querySelectorAll('.faq-question.active').forEach(activeQuestion => {
+                        if (activeQuestion !== question) {
+                            activeQuestion.classList.remove('active');
+                            activeQuestion.nextElementSibling.classList.remove('active');
+                            activeQuestion.querySelector('.toggle-icon').style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    // Toggle the clicked FAQ
+                    question.classList.toggle('active');
+                    answer.classList.toggle('active');
+                    if (answer.classList.contains('active')) {
+                        toggleIcon.style.transform = 'rotate(180deg)';
+                    } else {
+                        toggleIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+            // Function to generate a random hex color
+            function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '';
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            // Populate Leaderboard with dynamic avatars
+            const leaderboardData = [
+                { name: 'CryptoMaven', tag: '@CK_0024, 2d5W', referrals: '50 referrals' },
+                { name: 'EtherTrader', tag: '@ET_7890, 1a2B', referrals: '45 referrals' },
+                { name: 'DecentralChad', tag: '@DC_4567, 3g4H', referrals: '40 referrals' },
+                { name: 'BlockchainBuff', tag: '@BB_1122, 5i6J', referrals: '35 referrals' },
+                { name: 'NodeWarrior', tag: '@NW_3344, 7k8L', referrals: '30 referrals' },
+            ];
+
+            const leaderboardGrid = document.getElementById('leaderboardGrid');
+            if (leaderboardGrid) {
+                leaderboardGrid.innerHTML = ''; // Clear existing placeholders
+
+                leaderboardData.forEach(member => {
+                    const avatarInitial = member.name.charAt(0).toUpperCase();
+                    const bgColor = getRandomColor();
+                    const textColor = getRandomColor(); // Random text color for contrast
+                    const avatarUrl = `https://placehold.co/50x50/${bgColor}/${textColor}?text=${avatarInitial}`;
+
+                    const item = document.createElement('div');
+                    item.classList.add('leaderboard-item');
+
+                    item.innerHTML = `
+                        <div class="avatar">
+                            <img src="${avatarUrl}" alt="${member.name}'s avatar">
+                        </div>
+                        <div class="info">
+                            <h4>${member.name}</h4>
+                            <p>${member.tag}</p>
+                        </div>
+                        <div class="referrals">${member.referrals}</div>
+                    `;
+                    leaderboardGrid.appendChild(item);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
