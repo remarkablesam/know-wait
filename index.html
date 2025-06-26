@@ -12,8 +12,8 @@
     <style>
         /* CSS Variables for colors from the design system */
         :root {
-            --primary-purple: #8A2BE2; /* Primary */
-            --secondary-purple: #7B1FA2; /* A darker purple for interaction */
+            --primary-purple: #6D28D9; /* Updated to match the hero section purple from the image */
+            --secondary-purple: #7B1FA2; /* A darker purple for interaction - can be adjusted if needed */
             --text-dark: #1A1A1A; /* Black text */
             --text-gray: #4A4A4A; /* Grey text */
             --white: #FFFFFF;
@@ -24,6 +24,8 @@
             --border-color: #D3D3D3;
             --border-light: #E0E0E0;
             --placeholder-color: #B0B0B0;
+            --dark-purple-footer: #2D005A; /* Deep purple color derived from the image */
+            --secondary-card-background: #F8F8FC; /* Lighter background for specific cards in escrow section */
         }
 
         /* Basic Reset & Typography */
@@ -37,7 +39,9 @@
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
-            background-color: var(--background-light-gray);
+            /* Updated background to a lighter white-like color and removed pattern */
+            background-color: #FFFFFF; /* Changed to pure white as requested */
+            background-image: none; /* Removed the background pattern */
             overflow-x: hidden;
         }
 
@@ -110,6 +114,7 @@
             width: auto;
             object-fit: contain;
             vertical-align: middle;
+            /* No longer hiding the image or using ::before content for logo text */
         }
 
         .nav-menu {
@@ -210,8 +215,8 @@
 
         /* Hero Section */
         .hero {
-            background-color: var(--primary-purple);
-            color: var(--white);
+            background-color: var(--white); /* Changed to white background */
+            color: var(--text-dark); /* Default text color for the section */
             padding: 100px 20px;
             text-align: center;
             display: flex;
@@ -225,7 +230,7 @@
             font-size: 48px;
             font-weight: 700;
             margin-bottom: 20px;
-            color: var(--white);
+            color: var(--primary-purple); /* H1 text to purple */
             max-width: 800px;
             line-height: 1.2;
         }
@@ -234,28 +239,67 @@
             font-size: 20px;
             margin-bottom: 30px;
             max-width: 700px;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark); /* Paragraph text to black */
         }
 
         .hero .btn-white {
-            background-color: var(--white);
-            color: var(--primary-purple);
-            border: none;
+            background-color: var(--primary-purple); /* Button background remains primary purple */
+            color: var(--white); /* Button text white */
+            border: 2px solid var(--primary-purple); /* Border same as button color */
             padding: 15px 40px;
             font-size: 18px;
             font-weight: 600;
             border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Add shadow to button */
         }
 
         .hero .btn-white:hover {
-            background-color: var(--light-grey-bg);
+            background-color: var(--secondary-purple); /* Slightly darker on hover */
             transform: translateY(-2px);
         }
 
         .hero .waitlist-count {
             margin-top: 20px;
             font-size: 16px;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-dark); /* Waitlist count text to black */
+        }
+
+        /* Waitlist Avatars */
+        .waitlist-avatars {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 15px;
+            /* gap: -5px; Removed direct gap as margin handles it */
+        }
+
+        .waitlist-avatars img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color); /* Darker border for visibility on white background */
+            object-fit: cover;
+            position: relative;
+        }
+
+        .waitlist-avatars img:nth-child(1) {
+            margin-right: -10px; /* Overlap with next */
+            z-index: 3;
+        }
+
+        .waitlist-avatars img:nth-child(2) {
+            margin-right: -10px; /* Overlap with next */
+            z-index: 2;
+        }
+
+        .waitlist-avatars img:nth-child(3) {
+            z-index: 1;
+        }
+
+        .waitlist-avatars .waitlist-count {
+            margin-top: 0;
+            margin-left: 15px;
+            color: var(--text-dark); /* Waitlist count text to black */
         }
 
 
@@ -270,9 +314,12 @@
             background-color: var(--card-background);
             padding: 30px;
             border-radius: 12px;
-            text-align: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left; /* Align text to left for icons on left */
+            display: flex; /* Use flexbox for icon and text alignment */
+            align-items: flex-start; /* Align items to the top */
+            gap: 20px; /* Space between icon and text */
         }
 
         .feature-card:hover {
@@ -283,7 +330,13 @@
         .feature-card .icon {
             font-size: 48px;
             color: var(--primary-purple);
-            margin-bottom: 20px;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            margin-bottom: 0; /* Remove default margin */
+            margin-top: 5px; /* Adjust vertical alignment of icon */
+        }
+
+        .feature-card-content {
+            flex-grow: 1; /* Allow content to take remaining space */
         }
 
         .feature-card h3 {
@@ -355,6 +408,9 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             position: relative;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .how-it-works-step .step-number {
@@ -371,19 +427,58 @@
             font-size: 22px;
             font-weight: 600;
             margin-top: 20px; /* Space for number */
-            text-align: left;
-            margin-left: 20px;
+            text-align: center; /* Center align title */
+            margin-left: 0; /* Remove left margin */
         }
 
         .how-it-works-step p {
             font-size: 16px;
             color: var(--text-gray);
-            text-align: left;
-            margin-left: 20px;
+            text-align: center; /* Center align paragraph */
+            margin-left: 0; /* Remove left margin */
+            margin-bottom: 20px; /* Space before image */
+        }
+
+        .how-it-works-image-container {
+            width: 100%; /* Image takes full width of card */
+            max-width: 250px; /* Max width for image consistency */
+            height: 180px; /* Fixed height for consistency, adjust as needed */
+            margin-top: auto; /* Push image to bottom if content is short */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            overflow: hidden; /* Ensure image respects border-radius */
+            background-color: var(--light-grey-bg); /* Fallback/placeholder background */
+        }
+
+        .how-it-works-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the area, cropping if necessary */
+            border-radius: 8px; /* Rounded corners for the image itself */
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid var(--primary-purple);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
 
         /* How Escrow Protection Works */
+        .escrow-safety-full {
+            background-color: #F0F0F4; /* Match overall background of the page */
+        }
+
         .escrow-steps {
             display: flex;
             justify-content: space-around;
@@ -393,12 +488,13 @@
             gap: 30px;
         }
 
-        .step {
+        .escrow-steps .step { /* More specific selector */
             flex: 1;
             min-width: 250px; /* Ensures steps don't get too small */
             padding: 20px;
             border-radius: 12px;
-            background-color: var(--card-background);
+            background-color: var(--secondary-card-background); /* Lighter background */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Add subtle shadow */
         }
 
         .step .icon {
@@ -426,7 +522,7 @@
         .escrow-details > div {
             flex: 1;
             min-width: 300px;
-            background-color: var(--card-background);
+            background-color: var(--secondary-card-background); /* Apply new background */
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.03);
@@ -463,11 +559,12 @@
 
         /* Important Note */
         .important-note {
-            background-color: var(--card-background);
+            background-color: var(--secondary-card-background); /* Apply new background */
             padding: 30px;
             border-radius: 12px;
             border-left: 5px solid var(--primary-purple);
             margin-top: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03); /* Add subtle shadow */
         }
 
         .important-note h3 {
@@ -708,7 +805,7 @@
 
         /* Footer */
         .footer {
-            background-color: var(--text-dark);
+            background-color: var(--dark-purple-footer); /* Apply the new dark purple color */
             color: var(--white);
             padding: 50px 0 20px;
             font-size: 14px;
@@ -751,6 +848,7 @@
             object-fit: contain;
             vertical-align: middle;
             margin-bottom: 20px;
+            border-radius: 8px; /* Retaining border-radius from previous updates */
         }
 
         .footer .newsletter-form {
@@ -882,7 +980,13 @@
                 <h1>Buy, Sell & Offer Services<br>Directly, Securely, Onchain</h1>
                 <p>The crypto-native P2P marketplace where you can safely buy and sell goods, digital products, and services with built-in escrow protection.</p>
                 <a href="#signup" class="btn btn-white">Join the waitlist</a>
-                <p class="waitlist-count">Join 1,000+ people on the waitlist</p>
+                <div class="waitlist-avatars">
+                    <!-- Added three avatar images -->
+                    <img src="A.jpg" alt="Avatar 1">
+                    <img src="B.jpg" alt="Avatar 2">
+                    <img src="C.png" alt="Avatar 3">
+                    <p class="waitlist-count">Join 1,300+ people on the waitlist</p>
+                </div>
                 <!-- Placeholder for image/graphic -->
                 <div style="width: 100%; max-width: 600px; height: 200px; background-color: rgba(255,255,255,0.1); border-radius: 12px; margin-top: 50px;"></div>
             </div>
@@ -905,59 +1009,95 @@
                 <div class="feature-grid">
                     <div class="feature-card">
                         <i class="fas fa-shield-alt icon"></i>
-                        <h3>Escrow Protected</h3>
-                        <p>Your transactions are secured by our blockchain-powered escrow system.</p>
+                        <div class="feature-card-content">
+                            <h3>Escrow Protected</h3>
+                            <p>Your transactions are secured by our blockchain-powered escrow system.</p>
+                        </div>
                     </div>
                     <div class="feature-card">
                         <i class="fas fa-coins icon"></i>
-                        <h3>Crypto-Native</h3>
-                        <p>Seamlessly integrate with various cryptocurrencies for transactions.</p>
+                        <div class="feature-card-content">
+                            <h3>Crypto-Native</h3>
+                            <p>Seamlessly integrate with various cryptocurrencies for transactions.</p>
+                        </div>
                     </div>
                     <div class="feature-card">
                         <i class="fas fa-users icon"></i>
-                        <h3>Global Community</h3>
-                        <p>Join a vibrant community of buyers and sellers worldwide.</p>
+                        <div class="feature-card-content">
+                            <h3>Global Community</h3>
+                            <p>Join a vibrant community of buyers and sellers worldwide.</p>
+                        </div>
                     </div>
                     <div class="feature-card">
                         <i class="fas fa-boxes icon"></i>
-                        <h3>Digital & Physical Product Sales</h3>
-                        <p>Secure transactions for both digital goods and tangible products.</p>
+                        <div class="feature-card-content">
+                            <h3>Digital & Physical Product Sales</h3>
+                            <p>Secure transactions for both digital goods and tangible products.</p>
+                        </div>
                     </div>
                     <div class="feature-card">
                         <i class="fas fa-briefcase icon"></i>
-                        <h3>Advance Services Zone</h3>
-                        <p>Facilitate secure payments for professional services and freelancing.</p>
+                        <div class="feature-card-content">
+                            <h3>Advance Services Zone</h3>
+                            <p>Facilitate secure payments for professional services and freelancing.</p>
+                        </div>
                     </div>
                     <div class="feature-card">
                         <i class="fas fa-truck icon"></i>
-                        <h3>Logistics Integration</h3>
-                        <p>Streamlined delivery and tracking solutions integrated into the platform.</p>
+                        <div class="feature-card-content">
+                            <h3>Logistics Integration</h3>
+                            <p>Streamlined delivery and tracking solutions integrated into the platform.</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div id="escrow-safety-tab" class="tab-content">
                 <div class="section-header">
-                    <h3>Enhanced Escrow Security</h3>
-                    <p>Our escrow system uses advanced smart contracts to provide unparalleled security for all transactions.</p>
+                    <h2>How Escrow Protection Works</h2>
+                    <p>Our escrow system ensures safe transaction for both buyers and sellers, elimination the risk of fraud and disputes</p>
                 </div>
+
+                <div class="escrow-steps">
+                    <div class="step">
+                        <i class="fas fa-lock icon"></i>
+                        <h3>Funds Secured</h3>
+                        <p>Buyer's payment is held in escrow until delivery is confirmed</p>
+                    </div>
+                    <div class="step">
+                        <i class="fas fa-box-open icon"></i> <!-- Changed to fa-box-open for a package delivery look -->
+                        <h3>Delivery Confirmed</h3>
+                        <p>Buyer confirms receipt and satisfaction with the goods/services</p>
+                    </div>
+                    <div class="step">
+                        <i class="fas fa-check-circle icon"></i>
+                        <h3>Payment Released</h3>
+                        <p>Funds are automatically released to the seller</p>
+                    </div>
+                </div>
+
                 <div class="escrow-details">
                     <div>
-                        <h4>Buyer Protections</h4>
+                        <h4>For Buyers</h4>
                         <ul>
-                            <li>Funds are held until satisfied with delivery.</li>
-                            <li>Option to dispute if terms are not met.</li>
-                            <li>Full refund if seller fails to deliver.</li>
+                            <li>Your payment is protected until you receive your order.</li>
+                            <li>Dispute resolution available if issues arise</li>
+                            <li>Full refund if seller doesn't deliver</li>
                         </ul>
                     </div>
                     <div>
-                        <h4>Seller Benefits</h4>
+                        <h4>For Sellers</h4>
                         <ul>
-                            <li>Guaranteed payment once delivery is confirmed.</li>
-                            <li>Protection against fraudulent disputes.</li>
-                            <li>Clear terms reduce misunderstandings.</li>
+                            <li>Guaranteed payment once you fulfill your obligations</li>
+                            <li>Protection against fraudulent chargeback claims</li>
+                            <li>Clear terms and conditions for all transaction</li>
                         </ul>
                     </div>
+                </div>
+
+                <div class="important-note">
+                    <h3>Important Note</h3>
+                    <p>All transactions are governed by our escrow smart contract. By using KnowEmpire, you agree to abide by the terms and conditions of our secure escrow system. Dispute are resolved through our decentralised arvitration process.</p>
                 </div>
             </div>
 
@@ -970,7 +1110,7 @@
             </div>
         </section>
 
-        <!-- How It Works Section -->
+        <!-- How It Works Section (This is a separate section, not part of escrow safety) -->
         <section id="how-it-works" class="container">
             <div class="section-header">
                 <h2>How it Works</h2>
@@ -982,74 +1122,34 @@
                     <span class="step-number">1</span>
                     <h3>Connect Farcaster</h3>
                     <p>Sign up or link your Farcaster account to access the marketplace with your existing Web3 identity.</p>
+                    <div class="how-it-works-image-container">
+                        <img src="farcast.png" alt="Connect Farcaster">
+                    </div>
                 </div>
                 <div class="how-it-works-step">
                     <span class="step-number">2</span>
                     <h3>List Your Item/Service</h3>
                     <p>Create a listing with photos, description, price and delivery options for your product or service.</p>
+                    <div class="how-it-works-image-container">
+                        <img src="unnamed.jpg" alt="List Item/Service">
+                    </div>
                 </div>
                 <div class="how-it-works-step">
                     <span class="step-number">3</span>
                     <h3>Secure Escrow Transaction</h3>
                     <p>Buyer funds are held in escrow until delivery is confirmed, protecting both parties.</p>
+                    <div class="how-it-works-image-container">
+                        <img src="key.jpg" alt="Secure Escrow Transaction">
+                    </div>
                 </div>
                 <div class="how-it-works-step">
                     <span class="step-number">4</span>
                     <h3>Complete & Review</h3>
                     <p>Confirm receipt, release funds, and leave a review to build your reputation in the ecosystem.</p>
+                    <div class="how-it-works-image-container">
+                        <img src="rate.jpg" alt="Complete & Review">
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- How Escrow Protection Works Section (from previous iteration - renamed ID for uniqueness) -->
-        <section id="escrow-safety-full" class="container">
-            <div class="section-header">
-                <h2>How Escrow Protection Works</h2>
-                <p>Our robust escrow system ensures fair and secure transactions every time.</p>
-            </div>
-
-            <div class="escrow-steps">
-                <div class="step">
-                    <i class="fas fa-lock icon"></i>
-                    <h3>Funds Secured</h3>
-                    <p>Buyer's funds are held securely in a smart contract until conditions are met.</p>
-                </div>
-                <div class="step">
-                    <i class="fas fa-check-circle icon"></i>
-                    <h3>Delivery Confirmed</h3>
-                    <p>Seller delivers goods/services, and buyer confirms receipt and satisfaction.</p>
-                </div>
-                <div class="step">
-                    <i class="fas fa-hand-holding-usd icon"></i>
-                    <h3>Payment Released</h3>
-                    <p>Funds are automatically released to the seller upon confirmation.</p>
-                </div>
-            </div>
-
-            <div class="escrow-details">
-                <div>
-                    <h4>For Buyers</h4>
-                    <ul>
-                        <li>Your payment is protected until you receive your goods.</li>
-                        <li>Ability to dispute your order if it doesn't match description.</li>
-                        <li>Clear-cut terms and conditions for all transactions.</li>
-                        <li>24/7 support for any issues.</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>For Sellers</h4>
-                    <ul>
-                        <li>Guaranteed payment once delivery is confirmed.</li>
-                        <li>Protection against fraudulent chargebacks.</li>
-                        <li>Clear-cut terms and conditions for all transactions.</li>
-                        <li>Access to a global marketplace.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="important-note">
-                <h3>Important Note</h3>
-                <p>All transactions are governed by our escrow smart contract. By using KnowEmpire, you agree to abide by the terms and conditions of our secure escrow. Please refer to our full terms of service for detailed protection protocols.</p>
             </div>
         </section>
 
