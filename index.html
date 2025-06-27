@@ -270,7 +270,6 @@
             justify-content: center;
             align-items: center;
             margin-top: 15px;
-            /* gap: -5px; Removed direct gap as margin handles it */
         }
 
         .waitlist-avatars img {
@@ -302,6 +301,15 @@
             color: var(--text-dark); /* Waitlist count text to black */
         }
 
+        /* Styling for the new image in hero section */
+        .hero-main-image {
+            display: block; /* Ensures the image takes up its own block space */
+            margin: 50px auto; /* Centers the image and adds space above */
+            max-width: 80%; /* Limits the image width to be responsive */
+            height: auto; /* Maintains aspect ratio */
+            border-radius: 12px; /* Rounded corners for the image */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15); /* Add a subtle shadow */
+        }
 
         /* Feature Cards */
         .feature-grid {
@@ -984,11 +992,11 @@
                     <!-- Added three avatar images -->
                     <img src="A.jpg" alt="Avatar 1">
                     <img src="B.jpg" alt="Avatar 2">
-                    <img src="C.png" alt="Avatar 3">
+                    <img src="C.jpg" alt="Avatar 3">
                     <p class="waitlist-count">Join 1,300+ people on the waitlist</p>
                 </div>
-                <!-- Placeholder for image/graphic -->
-                <div style="width: 100%; max-width: 600px; height: 200px; background-color: rgba(255,255,255,0.1); border-radius: 12px; margin-top: 50px;"></div>
+                <!-- New image added here -->
+                <img src="tt.jpg" alt="Hero Section Main Image" class="hero-main-image">
             </div>
         </section>
 
