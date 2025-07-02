@@ -39,7 +39,6 @@
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
-            /* Updated background to a lighter white-like color and removed pattern */
             background-color: #FFFFFF; /* Changed to pure white as requested */
             background-image: none; /* Removed the background pattern */
             overflow-x: hidden;
@@ -114,7 +113,6 @@
             width: auto;
             object-fit: contain;
             vertical-align: middle;
-            /* No longer hiding the image or using ::before content for logo text */
         }
 
         .nav-menu {
@@ -231,14 +229,14 @@
             font-weight: 700;
             margin-bottom: 20px;
             color: var(--primary-purple); /* H1 text to purple */
-            max-width: 800px;
+            max-width: 900px; /* Increased max-width for better desktop display */
             line-height: 1.2;
         }
 
         .hero p {
             font-size: 20px;
             margin-bottom: 30px;
-            max-width: 700px;
+            max-width: 800px; /* Increased max-width for better desktop display */
             color: var(--text-dark); /* Paragraph text to black */
         }
 
@@ -1195,7 +1193,7 @@
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes, Know Empire leverages Farcaster for user authentication and social interactions within the marketplace. You will need a Farcaster ID to get started.</p>
+                        <p>Yes, Know Empire is built as a Farcaster mini-app, so you'll need a Farcaster account to access the platform. This integration provides identity verification and community trust through your existing Web3 social graph.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1204,7 +1202,7 @@
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Payments are made using various cryptocurrencies supported on the platform. Funds are held in a secure escrow smart contract until the transaction terms are met and confirmed by both parties.</p>
+                        <p>When a buyer places an order, the payment (in USDC) is sent to a smart contract escrow, not directly to the seller. The seller only receives the funds after the buyer confirms the item or service was delivered.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1213,16 +1211,16 @@
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>You can sell a wide range of items, including digital products (e.g., e-books, software licenses), physical goods, and offer various services (e.g., graphic design, writing, consulting).</p>
+                        <p>You can sell both digital products (like artwork, templates, or files) and physical items (like t-shirts, prints, or handmade goods). You can also offer services such as design, writing, or marketing.</p>
                     </div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question">
-                        What happens if there's a problem with the delivery?
+                        What happens if there’s a problem with the delivery?
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Our escrow system includes a dispute resolution mechanism. If there's a problem, you can open a dispute, and our team will mediate to ensure a fair resolution based on the transaction terms.</p>
+                        <p>We use the tracking ID, it will help resolve the issue using the shipment data. If no tracking was provided, the seller is fully responsible.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1231,7 +1229,7 @@
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Absolutely! Know Empire is designed for users to seamlessly transition between buying and selling roles, allowing you to participate fully in the marketplace ecosystem.</p>
+                        <p>Yes! You can buy and sell on KnowEmpire. It’s built to support both buyers and sellers all in one place.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -1240,7 +1238,7 @@
                         <i class="fas fa-chevron-down toggle-icon"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes, a compatible Web3 wallet is required to interact with the smart contracts, manage your funds, and participate in transactions on the Know Empire platform.</p>
+                        <p>Yes, since Know Empire runs onchain, you’ll need a crypto wallet to sign in and handle payments.</p>
                     </div>
                 </div>
             </div>
